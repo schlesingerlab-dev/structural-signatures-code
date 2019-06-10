@@ -4,47 +4,48 @@ Running the `generate_autoencoder_signature_model.R` script will generate an Rda
 
 Running `generate_autoencoder_signature_model.R` without arguments will give the following output, in order to run the code correctly: 
 
-[1] Job Name
 
-[2] Signature file: 
+`[1] Job Name`
 
-        Either [a] ranked gene list csv or [b] structural signatures output csv files
+`[2] Signature file: `
 
-        Ranked Gene list expected input:
+        `Either [a] ranked gene list csv or [b] structural signatures output csv files`
+
+        `Ranked Gene list expected input:`
         
-                'ID','class','gene','rank'
+                `'ID','class','gene','rank'`
         
-        Structutal signatures expected input: 
+        `Structutal signatures expected input: `
         
-                'structure', 'counts_observed','background_counts', 'number_of_genes_in_set', 
+                `'structure', 'counts_observed','background_counts', 'number_of_genes_in_set', `
                 
-                'total_number_proteins_proteome','total_number_proteins_proteome',
+                `'total_number_proteins_proteome','total_number_proteins_proteome',`
                 
-                'pvalue','fdr','bonforroni_cutoff','log_fold_change','ID','class'
+               ` 'pvalue','fdr','bonforroni_cutoff','log_fold_change','ID','class'`
         
-        No Header is expected in the file
+        `No Header is expected in the file`
 
-[3] Type:
+`[3] Type:`
 
-        [a] 'gene' or [b] 'fold' or [c] 'superfamily' or [d] 'domain' or [e] 'family'
+       ` [a] 'gene' or [b] 'fold' or [c] 'superfamily' or [d] 'domain' or [e] 'family'`
 
-[4] Autoencoder bottleneck size (default = 3 )
+`[4] Autoencoder bottleneck size (default = 3 )`
 
-[5] Feature to use to generate model
+`[5] Feature to use to generate model`
 
-        [a] For gene signatures
+       ` [a] For gene signatures`
         
-                [i] 'rank'  or [ii] 'presense' (default) 
+                `[i] 'rank'  or [ii] 'presense' (default) `
         
-        [b] For structural signatures
+        `[b] For structural signatures`
         
-                [i] 'pvalue' (default) or [ii]  'counts_observed' or [iii] 'log_fold_change' or
+                `[i] 'pvalue' (default) or [ii]  'counts_observed' or [iii] 'log_fold_change' or`
                 
-                [iiii] 'presense'
+                `[iiii] 'presense'`
 
-[6] Epochs for the Autoencoder (default = 50)
+`[6] Epochs for the Autoencoder (default = 50)`
 
-Generated output: 'Job Name'.rda
+`Generated output: 'Job Name'.rda`
 
 
 
