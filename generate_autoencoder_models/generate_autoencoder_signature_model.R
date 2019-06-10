@@ -124,7 +124,7 @@ embed_gene_signatures = function(data , type = "presense" , bottle = 3,  epochs 
     intermediate_layer_model <- keras_model(inputs = autoencoder_model$input, outputs = get_layer(autoencoder_model, "bottle")$output)
     return_data = list(embed_model =intermediate_layer_model , header = header , training_data = data.x , training_meta = data.y , params = c(type = type, bottleneck = bottle, epochs = epochs) , performance = history )
 }
-
+ 
 embed_ss_signatures = function(data , type = "pvalue" , datatype  , bottle = 3,  epochs = 25 )
 {
     header_ss = c(
