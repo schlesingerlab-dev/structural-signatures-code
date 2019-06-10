@@ -55,7 +55,7 @@ if (length(args) < 5 ) {
 library(data.table)
 library(tidyverse)
 library(keras)
-library(BBmisc)
+library(BBmisc)  
 
 jobid = as.character(args[1] ) 
 signatures = fread(args[2], sep = ",", header = F, )  #Either a gene list, or the outputs from structural signatures 
