@@ -88,7 +88,7 @@ gen_encoder_arch = function(inshape, bottle)
     )
     return(autoencoder_model)
 }  
-
+ 
 embed_gene_signatures = function(data , type = "presense" , bottle = 3,  epochs = 25 )
 {
     header_genes = c(
