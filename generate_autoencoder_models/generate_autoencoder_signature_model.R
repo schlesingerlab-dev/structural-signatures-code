@@ -28,7 +28,7 @@
 #ID,class
 
 args <- commandArgs(TRUE)
-if (length(args) < 5 ) {
+if (length(args) < 6 ) {
   stop("\n\033[31mThe following inputs are required\033[0m:\n[1] Job Name
 [2] Signature file: 
 \tEither [a] ranked gene list csv or [b] structural signatures output csv files
