@@ -4,6 +4,7 @@ Running the `generate_autoencoder_signature_model.R` script will generate an Rda
 
 Running `generate_autoencoder_signature_model.R` without arguments will give the following output, in order to run the code correctly: 
 
+`The following inputs are required`
 
 `[1] Job Name`
 
