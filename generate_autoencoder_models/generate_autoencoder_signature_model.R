@@ -64,7 +64,7 @@ bottle = as.character(args[4] ) #size of bottleneck
 type = as.character(args[5] ) #gene signatures: rank or presense || structural signatures: fc, counts, presense, pvalue 
 epochs = as.character(args[6] ) 
 
-##stacked autoencoder 
+##stacked autoencoder     
 gen_encoder_arch = function(inshape, bottle)
 {
     input_layer <- 
