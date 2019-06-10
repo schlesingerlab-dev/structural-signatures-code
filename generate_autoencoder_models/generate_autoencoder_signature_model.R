@@ -51,7 +51,7 @@ if (length(args) < 6 ) {
 [6] Epochs for the Autoencoder (default = 50)
 \n\033[34mGenerated output: \033[35m'Job Name'.rda\033[0m", call.=FALSE)
 } 
-
+  
 library(data.table)
 library(tidyverse)
 library(keras)
