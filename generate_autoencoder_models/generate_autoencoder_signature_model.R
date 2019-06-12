@@ -182,7 +182,7 @@ embed_ss_signatures = function(data , type = "pvalue" , datatype  , bottle = 3, 
     print("Training autoencoder model")
     row.names(data.wide) = data.wide$id 
     data.y = data.wide[,c("ID", "class")]
-    data.x = data.wide[,3:ncol(data.wide)] %>% data.matrix() %>% normalize( method = "range", range = c(0, 1), margin = 1) 
+    data.x = data.wide[,3:ncol(data.wide)] %>% data.matrix() # %>% normalize( method = "range", range = c(0, 1), margin = 1) 
     ##to make a stacked denoising autoencoder 
     data.x.noise = apply(data.x, 2, function(x) { noise = rnorm(length(x) , .01 , .005) ;  x + noise} ) 
     autoencoder_model = gen_encoder_arch( inshape = ncol(data.x), bottle = bottle ) 

@@ -5,6 +5,8 @@ Running the `generate_autoencoder_signature_model.R` script will generate
 1) an hdf5 file with the embedding model 
 2) an Rdata file containining training data, headers, performance, etc  
 
+The `embed_and_combined_signatures.R` script uses the outputs of  `generate_autoencoder_signature_model.R` to generate embeddings of either the training data or new validation data. It will create a single csv output with the embeddings 
+
 Running `generate_autoencoder_signature_model.R` without arguments will give the following output, in order to run the code correctly: 
 
 `The following inputs are required`
@@ -52,5 +54,36 @@ Running `generate_autoencoder_signature_model.R` without arguments will give the
 `Generated output: 'Job Name'.rda`
 
 
+Running the `embed_and_combined_signatures.R` script without parameters will show the following help screen: 
 
 
+`        The following inputs are required:`
+
+`[1] Job Name`
+
+`[2] Embed [a] 'training' or [b] 'testing' `
+
+`[3] gene-model job name `
+
+`[4] domain-model job name`
+
+`[5] family-model job name`
+
+`[6] superfamily-model job name`
+
+`[7] fold-model job name`
+   
+        If embeding testing data the following options are requred 
+        (formatted the same as needed by generate_autoencoder_models.R): 
+
+`[8] testing genes data`
+
+`[9] testing domain data`
+
+`[10] testing family data`
+
+`[11] testing superfamily data `
+
+`[12] testing fold data`
+
+`Generated output: 'Job Name'.csv`
