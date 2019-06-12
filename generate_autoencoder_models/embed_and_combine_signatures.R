@@ -5,11 +5,11 @@ args <- commandArgs(TRUE)
 if (length(args) < 7 ) {
 stop("\n\t\033[31mThe following inputs are required\033[0m:\n[1] Job Name
 [2] Embed [a] 'training' or [b] 'testing' 
-[3] gene-model.Rda
-[4] domain-model.Rda
-[5] family-model.Rda
-[6] superfamily-model.Rda
-[7] fold-model.Rda
+[3] gene-model job name 
+[4] domain-model job name
+[5] family-model job name
+[6] superfamily-model job name
+[7] fold-model job name
 \tIf embeding testing data the following options are requred 
 \t(formatted the same as needed by generate_autoencoder_models.R): 
 [8] testing genes data
