@@ -209,16 +209,15 @@ if ( datatype == "gene" )
         type = type, 
         bottle = bottle , 
         epochs = epochs )
-    out_data %>% save_model_hdf5(paste0(jobid),".h5")
+    save_model_hdf5(out_data$embed_model, paste0(jobid,".h5"), overwrite = TRUE)
     save( out_data, file = paste0(jobid,".rda"))
-} else  
-{
+} else  {
     print(paste("generating structural signature embedding for ", jobid , sep = ""))
     out_data = embed_ss_signatures( data = signatures, 
         type = type, 
         datatype = datatype , 
         bottle = bottle , 
         epochs = epochs )
-    out_data %>% save_model_hdf5(paste0(jobid),".h5")
+    save_model_hdf5(out_data$embed_model, paste0(jobid,".h5"), overwrite = TRUE)
     save( out_data, file = paste0(jobid,".rda"))
 }

@@ -1,6 +1,9 @@
 # Embedding Signatures using an Autoencoder
 
-Running the `generate_autoencoder_signature_model.R` script will generate an Rdata file containining a model to generate embeded features from gene signature or structural signature data. 
+Running the `generate_autoencoder_signature_model.R` script will generate 
+
+1) an hdf5 file with the embedding model 
+2) an Rdata file containining training data, headers, performance, etc  
 
 Running `generate_autoencoder_signature_model.R` without arguments will give the following output, in order to run the code correctly: 
 
