@@ -1,4 +1,4 @@
-# Embedding Signatures using an Stacked DeNoising Autoencoder
+# Embedding Signatures using an Stacked Denoising Autoencoder
 
 Running the `generate_autoencoder_signature_model.R` script will generate 
 

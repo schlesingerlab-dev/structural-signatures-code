@@ -38,20 +38,64 @@ stop("
 [11] testing fold data" )
 }
 
-load(args[3] ) ## gene, fold, superfamily, domain, family 
-genemod = out_data
-load(args[4] ) 
-dommod = out_data
-load(args[5] ) 
-fammod = out_data
-load(args[6] ) 
-sfammod = out_data
-load(args[7] ) 
-foldmod = out_data
+load(paste0(args[3], ".rda")) ## gene, fold, superfamily, domain, family 
+geneinfo = out_data
+genemod <- load_model_hdf5(paste0(args[3],".h5"))
+
+load(paste0(args[4], ".rda")) ## gene, fold, superfamily, domain, family 
+dominfo = out_data
+dommod <- load_model_hdf5(paste0(args[4],".h5"))
+
+load(paste0(args[5], ".rda")) ## gene, fold, superfamily, domain, family 
+faminfo = out_data
+fammod <- load_model_hdf5(paste0(args[5],".h5"))
+
+load(paste0(args[6], ".rda")) ## gene, fold, superfamily, domain, family 
+sfaminfo = out_data
+sfammod <- load_model_hdf5(paste0(args[6],".h5"))
+
+load(paste0(args[7], ".rda")) ## gene, fold, superfamily, domain, family 
+foldinfo = out_data
+foldmod <- load_model_hdf5(paste0(args[7],".h5"))
+
 
 generate_embedings = function(model, data , meta  )
 {
     embed <- predict(model, data.matrix(data)) %>% as.data.frame
+    embed = cbind(embed, meta) %>% as.data.frame
+    embed
 }
 
-    
+combined_embedings = function(geneembed, domainembed, famembed, sfamembed , foldembed )
+{
+    gene.fold = merge(geneembed, foldembed , by = "ID" )
+    gene.fold.domain = merge(gene.fold, domembed, by = "ID" )
+    gene.fold.domain$class = NULL
+    gene.fold.domain.sfam =   merge(gene.fold.domain, domembed, by = "ID" )
+    gene.fold.domain.sfam$class = NULL
+    gene.fold.domain.sfam.fam = merge(gene.fold.domain.sfam, familyembed, by = "ID" )
+    gene.fold.domain.sfam.fam 
+}
+ 
+if (type == "training") 
+{
+    geneembed = generate_embedings(genemod, geneinfo$training_data, geneinfo$training_meta)
+    names(geneembed) =c(paste0("gene", 1:as.numeric(geneinfo$params[2])), "ID", "class")
+    domembed = generate_embedings(dommod, dominfo$training_data, dominfo$training_meta)
+    names(domembed) =c(paste0("domain", 1:as.numeric(dominfo$params[2])), "ID", "class")
+    familyembed = generate_embedings(fammod, faminfo$training_data, faminfo$training_meta)
+    names(familyembed) =c(paste0("family", 1:as.numeric(faminfo$params[2])), "ID", "class")
+    superfamilyembed = generate_embedings(sfammod, sfaminfo$training_data, sfaminfo$training_meta)
+    names(superfamilyembed) =c(paste0("superfamily", 1:as.numeric(sfaminfo$params[2])), "ID", "class")
+    foldembed = generate_embedings(foldmod, foldinfo$training_data, foldinfo$training_meta)
+    names(foldembed) =c(paste0("fold", 1:as.numeric(foldinfo$params[2])), "ID", "class")
+    combined = combined_embedings(geneembed, domainembed, famembed, sfamembed , foldembed)
+    write.table(combined, paste0(jobid,".csv"), col.names = T, eol = "\n", quote = F, sep = "," ,
+     row.names = F )
+}
+else if (type == "testing" ) 
+{
+
+}
+
+
