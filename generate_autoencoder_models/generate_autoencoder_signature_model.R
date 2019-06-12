@@ -218,5 +218,6 @@ if ( datatype == "gene" )
         datatype = datatype , 
         bottle = bottle , 
         epochs = epochs )
+    out_data %>% save_model_hdf5(paste0(jobid),".h5")
     save( out_data, file = paste0(jobid,".rda"))
 }
