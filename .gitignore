@@ -1,0 +1,14 @@
+generate_autoencoder_models/allcombined.archs4.domain.csv.format
+generate_autoencoder_models/allcombined.archs4.family.csv.format
+generate_autoencoder_models/allcombined.archs4.fold.csv.format
+generate_autoencoder_models/allcombined.archs4.superfam.csv.format
+generate_autoencoder_models/gtex.combined.embedings.csv
+generate_autoencoder_models/data dir/allcombined.250.domain.csv.3.gtex
+generate_autoencoder_models/data dir/allcombined.250.family.csv.3.gtex
+generate_autoencoder_models/data dir/allcombined.250.fold.csv.3.gtex
+generate_autoencoder_models/data dir/allcombined.250.genes.gtex
+generate_autoencoder_models/data dir/allcombined.250.superfamily.csv.3.gtex
+generate_autoencoder_models/data dir/allcombined.archs4.domain.csv
+generate_autoencoder_models/data dir/allcombined.archs4.family.csv
+generate_autoencoder_models/data dir/allcombined.archs4.fold.csv
+generate_autoencoder_models/data dir/allcombined.archs4.superfam.csv

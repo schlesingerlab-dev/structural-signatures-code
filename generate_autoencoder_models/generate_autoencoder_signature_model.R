@@ -16,7 +16,6 @@
 ###an rda of the embeded model
 ##for gene signatures a header file is generated as well to embed other signatures to the embeding signatures since the set of genes can be variable across analyzes 
 
-
 ###EXPECTED dataframe INPUTS 
 ###no header is assumed 
 ###its assumed that multiple samples are present 
@@ -36,7 +35,7 @@ if (length(args) < 6 ) {
 \t\t'ID','class','gene','rank'
 \tStructutal signatures expected input: 
 \t\t'structure', 'counts_observed','background_counts', 'number_of_genes_in_set', 
-\t\t'total_number_proteins_proteome','total_number_proteins_proteome',
+\t\t'total_number_proteins_proteome',
 \t\t'pvalue','fdr','bonforroni_cutoff','log_fold_change','ID','class'
 \tNo Header is expected in the file
 [3] Type:
