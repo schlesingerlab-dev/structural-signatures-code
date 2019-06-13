@@ -10,7 +10,7 @@ library(data.table)
 library(tidyverse)
 library(tcltk)
 X11()
-#args[1] = "generate_autoencoder_models/results/combined.roc.data.csv"
+args[1] = "results/combined.roc.data.csv.2"
 roc.total= fread(args[1], header =T, stringsAsFactors = F, sep =",")
 names(roc.total) = c("sensitivity","specificity","comparison", "class","auc")
 average.aucs = roc.total %>%  group_by(class, comparison ) %>%  summarise(average_auc=(mean(auc))) %>%  as.data.frame()
@@ -28,12 +28,6 @@ ggplot(roc.total, aes( 1- specificity ,sensitivity , color = factor(comparison) 
                         sprintf('%.2f', round(average_auc, digits=2 ) ) ), 
                             group = class), color = "black", size = 4.5) +
     geom_text(data = average.aucs[average.aucs$comparison=="Train-ARCHS4::Predict-GTeX", ], aes(.55, .075, label = paste0("Train-ARCHS4::Predict-GTeX", "\n\t\t\tAUC: ", 
-                        sprintf('%.2f', round(average_auc, digits=2 ) ) ), 
-                            group = class), color = "black", size = 4.5) +
-    geom_text(data = average.aucs[average.aucs$comparison=="gene-Train-GTeX::Predict-ARCHS4", ], aes(.55, .95, label = paste0("gene-Train-GTeX::Predict-ARCHS4", "\n\t\t\tAUC: ", 
-                        sprintf('%.2f', round(average_auc, digits=2 ) ) ), 
-                            group = class), color = "black", size = 4.5) +
-    geom_text(data = average.aucs[average.aucs$comparison=="gene-Train-ARCHS4::Predict-GTeX", ], aes(.55, .65, label = paste0("gene-Train-ARCHS4::Predict-GTeX", "\n\t\t\tAUC: ", 
                         sprintf('%.2f', round(average_auc, digits=2 ) ) ), 
                             group = class), color = "black", size = 4.5) +
     geom_abline( slope = 1, intercept = 0 , color ="red") + 

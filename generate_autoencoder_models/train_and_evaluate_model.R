@@ -38,13 +38,13 @@ library(pROC)
 library(data.table)
 library(caret)
 
-# args[1] = "test"
-# args[2] = "embed_models/archs.combined.training.csv"
-# args[3] = "embed_models/gtex.combined.into.archs.testing.csv"
-# args[4] = "yes"
-# args[5] = "yes"
-# args[6] = "yes"
-# args[7] = "yes"
+args[1] = "go-tissue-predictions"
+args[2] = "embed_models/archs.combined.training.csv"
+args[3] = "go-analysis/go-analysis.combined.signatures.csv"
+args[4] = "yes"
+args[5] = "yes"
+args[6] = "yes"
+args[7] = "yes"
 getroc_data = function(x, type  )
 {
   x.roc.sp = split(x, x$`observed_label`)
@@ -122,11 +122,14 @@ history = model %>%
             validation_split = 0.2,
             view_metrics = TRUE,
         )
-
 pred = predict(model, data.matrix(test.x )) %>% as.data.frame
+comp.cases = ! rowSums(is.na(pred)) > 0
+pred = pred[comp.cases, ]
 names(pred) = train.classes
-pred$predicted_label = names(pred)[apply(pred, 1 , which.max)]
-pred$observed_label = test.y$class
+prob_class = apply(pred, 1 , max)
+pred$predicted_label = names(pred)[ apply(pred, 1 , which.max) ]
+pred$observed_label = test.y[comp.cases,]$class
+pred$predicted_prob = prob_class 
 pred.conf = pred[,c("predicted_label", "observed_label")] %>% table() %>% data.matrix
 
 pred.roc = getroc_data(pred, jn)

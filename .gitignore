@@ -29,3 +29,7 @@ generate_autoencoder_models/data_dir/archs_top_genes_per_sample.250.csv
 generate_autoencoder_models/data_dir/archs_top_genes_per_sample.250.csv.filtered
 generate_autoencoder_models/data_dir/archs_top_genes_per_sample.250.csv.filtered.format
 generate_autoencoder_models/data_dir/remove_archs.txt
+generate_autoencoder_models/data_dir/go_analysis/*
+generate_autoencoder_models/go-analysis/*
+generate_autoencoder_models/embed_models/* 
+generate_autoencoder_models/results/*

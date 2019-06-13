@@ -20,6 +20,18 @@ stop("\n\t\033[31mThe following inputs are required\033[0m:\n[1] Job Name
 \033[34mGenerated output: \033[35m'Job Name'.csv\033[0m", call.=FALSE)
 } 
   
+# args[1] = "test"
+# args[2] = "training"
+# args[3] = "gtex_rda/gtex.genes.model"
+# args[4] = "gtex_rda/gtex.domain.model"
+# args[5] = "gtex_rda/gtex.family.model"
+# args[6] = "gtex_rda/gtex.superfamily.model"
+# args[7] = "gtex_rda/gtex.fold.model"
+args[8]  = "go-analysis/allcombined.GO.genelist.csv.format"
+args[9] = "go-analysis/allcombined.GO.domain.csv.format"
+args[10] = "go-analysis/allcombined.GO.fam.csv.format" 
+args[11] = "go-analysis/allcombined.GO.sfam.csv.format"
+args[12] = "go-analysis/allcombined.GO.fold.csv.format"
 
 jobid = as.character(args[1] ) 
 type  = as.character(args[2] )  #Either a gene list, or the outputs from structural signatures 
@@ -38,7 +50,9 @@ library(data.table)
 library(tidyverse)
 library(keras)
 library(BBmisc)  
-print("loading models\n")
+print("loading models")
+
+
 
 load(paste0(args[3], ".rda")) ## gene
 geneinfo = out_data
