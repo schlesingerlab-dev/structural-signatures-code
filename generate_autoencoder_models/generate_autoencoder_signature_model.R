@@ -1,31 +1,5 @@
 #!/usr/bin/Rscript  
 
-
-####This code generates the autoencoder model from a siganture set and train a nn model for predictions
-####INPUTS:
-###Job name
-###Either a gene list, or the outputs from structural signatures 
-###Type of signature:
-## gene, fold, superfamily, domain, family 
-###Optional parameters 
-##size of bottleneck 
-##type of data used: 
-#gene signatures: rank or presense 
-#structural signatures: log_fold_change, counts_observed, presense, pvalue 
-####OUTPUTS:
-###an rda of the embeded model
-##for gene signatures a header file is generated as well to embed other signatures to the embeding signatures since the set of genes can be variable across analyzes 
-
-###EXPECTED dataframe INPUTS 
-###no header is assumed 
-###its assumed that multiple samples are present 
-####For a gene list the expected input is: 
-##ID column, class, gene, rank
-####For the output from structural signature the expected input is
-# "structure", "counts_observed","background_counts", "number_of_genes_in_set",
-#"total_number_proteins_proteome","total_number_proteins_proteome","pvalue","fdr","bonforroni_cutoff","log_fold_change",
-#ID,class
-
 args <- commandArgs(TRUE)
 if (length(args) < 6 ) {
   stop("\n\033[31mThe following inputs are required\033[0m:\n[1] Job Name
