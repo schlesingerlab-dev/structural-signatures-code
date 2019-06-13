@@ -24,7 +24,7 @@ stop("\n\033[31mThe following inputs are required\033[0m:
     'Job name'.confusion.csv (optional) \033[0m", call.=FALSE)
 } 
 
-library(ggplot2)
+
 library(tidyr)
 library(dplyr)
 library(ggridges)
@@ -63,7 +63,7 @@ getroc_data = function(x, type  )
     print(class)
     roc.dat = roc(roc_dat$Observed, roc_dat$Predicted)
     df.to.return = cbind(roc.dat$sensitivities , roc.dat$specificities) %>%  as.data.frame()
-    names(df.to.return) = c("sensitivity", "specificityq")
+    names(df.to.return) = c("sensitivity", "specificity")
     df.to.return$comparison = rep( type, nrow(df.to.return))
     df.to.return$class = rep( class, nrow(df.to.return))
     df.to.return$auc = rep( roc.dat$auc %>%  as.numeric() , nrow(df.to.return))
