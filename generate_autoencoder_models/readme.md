@@ -5,85 +5,10 @@ Running the `generate_autoencoder_signature_model.R` script will generate
 1) an hdf5 file with the embedding model 
 2) an Rdata file containining training data, headers, performance, etc  
 
-The `embed_and_combined_signatures.R` script uses the outputs of  `generate_autoencoder_signature_model.R` to generate embeddings of either the training data or new validation data. It will create a single csv output with the embeddings 
+The `embed_and_combined_signatures.R` script uses the outputs of  `generate_autoencoder_signature_model.R` to generate embeddings of either the training data or new validation data. It will create a single csv output with the embeddings. 
 
-Running `generate_autoencoder_signature_model.R` without arguments will give the following output, in order to run the code correctly: 
+`train_and_evaluate_model.R` will take training data and testing data embeded by `embed_and_combined_signatures.r` and train a neural network to predict classes depending on the training 'class' column. 
 
-`The following inputs are required`
+`generate_roc_curve.R` will take the roc output from train_and_evaluate_model and plot ROC curves based on the input data
 
-`[1] Job Name`
-
-`[2] Signature file: `
-
-        Either [a] ranked gene list csv or [b] structural signatures output csv files
-
-        Ranked Gene list expected input:`
-        
-                'ID','class','gene','rank'`
-        
-        Structutal signatures expected input: `
-        
-                'structure', 'counts_observed','background_counts', 'number_of_genes_in_set', `
-                
-                'total_number_proteins_proteome','total_number_proteins_proteome',`
-                
-                'pvalue','fdr','bonforroni_cutoff','log_fold_change','ID','class'`
-        
-       No Header is expected in the file`
-
-`[3] Type:`
-
-       [a] 'gene' or [b] 'fold' or [c] 'superfamily' or [d] 'domain' or [e] 'family'
-
-`[4] Autoencoder bottleneck size (default = 3 )`
-
-`[5] Feature to use to generate model`
-
-        [a] For gene signatures
-        
-                [i] 'rank'  or [ii] 'presense' (default) 
-        
-        [b] For structural signatures
-        
-                [i] 'pvalue' (default) or [ii]  'counts_observed' or [iii] 'log_fold_change' or
-                
-                [iiii] 'presense'
-
-`[6] Epochs for the Autoencoder (default = 50)`
-
-`Generated output: 'Job Name'.rda`
-
-
-Running the `embed_and_combined_signatures.R` script without parameters will show the following help screen: 
-
-
-`        The following inputs are required:`
-
-`[1] Job Name`
-
-`[2] Embed [a] 'training' or [b] 'testing' `
-
-`[3] gene-model job name `
-
-`[4] domain-model job name`
-
-`[5] family-model job name`
-
-`[6] superfamily-model job name`
-
-`[7] fold-model job name`
-   
-        If embeding testing data the following options are requred 
-        (formatted the same as needed by generate_autoencoder_models.R): 
-
-`[8] testing genes data`
-
-`[9] testing domain data`
-
-`[10] testing family data`
-
-`[11] testing superfamily data `
-
-`[12] testing fold data`
-
-`Generated output: 'Job Name'.csv`
+Running the scripts without any arguments will output a help with all the required arguments needed to run the code 
