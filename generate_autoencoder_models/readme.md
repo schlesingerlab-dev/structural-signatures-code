@@ -22,6 +22,6 @@ The `*_rda/` directories contain autoencoder models and rdata files for the data
 
 The `embed_models/` directory contains embbedings 
 
-##To Do 
+## To Do 
 1) examples 
 2) comment code for clarity 
