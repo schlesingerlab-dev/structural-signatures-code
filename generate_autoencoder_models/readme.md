@@ -1,5 +1,7 @@
 # Embedding Signatures using an Stacked Denoising Autoencoder
 
+## Scripts 
+
 Running the `generate_autoencoder_signature_model.R` script will generate 
 
 1) an hdf5 file with the embedding model 
@@ -11,8 +13,15 @@ The `embed_and_combined_signatures.R` script uses the outputs of  `generate_auto
 
 `generate_roc_curve.R` will take the roc output from train_and_evaluate_model and plot ROC curves based on the input data
 
+## Getting help
+
 Running the scripts without any arguments will output a help with all the required arguments needed to run the code 
 
+## Directories 
 The `*_rda/` directories contain autoencoder models and rdata files for the databases used. 
 
 The `embed_models/` directory contains embbedings 
+
+##To Do 
+1) examples 
+2) comment code for clarity 
