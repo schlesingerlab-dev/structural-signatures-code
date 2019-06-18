@@ -38,13 +38,13 @@ library(pROC)
 library(data.table)
 library(caret)
 
-args[1] = "go-tissue-predictions"
-args[2] = "embed_models/archs.combined.training.csv"
-args[3] = "go-analysis/go-analysis.combined.signatures.csv"
-args[4] = "yes"
-args[5] = "yes"
-args[6] = "yes"
-args[7] = "yes"
+# args[1] = "go-tissue-predictions"
+# args[2] = "embed_models/archs.combined.training.csv"
+# args[3] = "go-analysis/go-analysis.combined.signatures.csv"
+# args[4] = "yes"
+# args[5] = "yes"
+# args[6] = "yes"
+# args[7] = "yes"
 getroc_data = function(x, type  )
 {
   x.roc.sp = split(x, x$`observed_label`)

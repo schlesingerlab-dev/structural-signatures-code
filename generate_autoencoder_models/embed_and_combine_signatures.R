@@ -27,11 +27,12 @@ stop("\n\t\033[31mThe following inputs are required\033[0m:\n[1] Job Name
 # args[5] = "gtex_rda/gtex.family.model"
 # args[6] = "gtex_rda/gtex.superfamily.model"
 # args[7] = "gtex_rda/gtex.fold.model"
-args[8]  = "go-analysis/allcombined.GO.genelist.csv.format"
-args[9] = "go-analysis/allcombined.GO.domain.csv.format"
-args[10] = "go-analysis/allcombined.GO.fam.csv.format" 
-args[11] = "go-analysis/allcombined.GO.sfam.csv.format"
-args[12] = "go-analysis/allcombined.GO.fold.csv.format"
+
+# args[8]  = "go-analysis/allcombined.GO.genelist.csv.format"
+# args[9] = "go-analysis/allcombined.GO.domain.csv.format"
+# args[10] = "go-analysis/allcombined.GO.fam.csv.format" 
+# args[11] = "go-analysis/allcombined.GO.sfam.csv.format"
+# args[12] = "go-analysis/allcombined.GO.fold.csv.format"
 
 jobid = as.character(args[1] ) 
 type  = as.character(args[2] )  #Either a gene list, or the outputs from structural signatures 
@@ -174,7 +175,7 @@ format_data_to_training = function(testing.data , training.info , type )
 
 if (type == "training") 
 {
-    print("generating training embedding\n")
+    print("generating training embedding")
     
     geneembed = generate_embedings(genemod, geneinfo$training_data, geneinfo$training_meta)
     names(geneembed) =c(paste0("gene", 1:as.numeric(geneinfo$params[2])), "ID", "class")
@@ -198,27 +199,33 @@ if (type == "training")
 } else if (type == "testing") 
 {
     
-    print("formating testing data\n")
+    print("formating testing data")
     train.gene = fread(args[8], header = F, sep = "," , stringsAsFactors= F )
     train.domain = fread(args[9], header = F, sep = "," , stringsAsFactors= F )
     train.fam = fread(args[10], header = F, sep = "," , stringsAsFactors= F )
     train.sfam = fread(args[11], header = F, sep = "," , stringsAsFactors= F )
     train.fold =  fread(args[12], header = F, sep = "," , stringsAsFactors= F )
+    print(paste0("working on ", args[8]))
     train.gene.format = format_data_to_training(  train.gene, geneinfo, "gene"  )
+    print(paste0("working on ", args[9]))
     train.domain.format = format_data_to_training(  train.domain, dominfo, "ss"  )
+    print(paste0("working on ", args[10]))
     train.fam.format = format_data_to_training(  train.fam  , faminfo, "ss"  )
+    print(paste0("working on ", args[11]))
     train.sfam.format = format_data_to_training(  train.sfam, sfaminfo, "ss"  )
+    print(paste0("working on ", args[12]))
     train.fold.format = format_data_to_training(  train.fold, foldinfo, "ss"  )
-    print("generating testing embedding\n")
+    print("generating testing embedding")
+    
     geneembed = generate_embedings(genemod, train.gene.format$testing.x, train.gene.format$testing.y)
     names(geneembed) =c(paste0("gene", 1:as.numeric(geneinfo$params[2])), "ID", "class")
-
+    
     domainembed = generate_embedings(dommod, train.domain.format$testing.x, train.domain.format$testing.y)
     names(domainembed) =c(paste0("domain", 1:as.numeric(dominfo$params[2])), "ID", "class")
     
     famembed = generate_embedings(fammod, train.fam.format$testing.x, train.fam.format$testing.y)
     names(famembed) =c(paste0("family", 1:as.numeric(faminfo$params[2])), "ID", "class")
-    
+
     sfamembed= generate_embedings(sfammod, train.sfam.format$testing.x, train.sfam.format$testing.y)
     names(sfamembed) =c(paste0("superfamily", 1:as.numeric(sfaminfo$params[2])), "ID", "class")
     
