@@ -33,3 +33,4 @@ generate_autoencoder_models/data_dir/go_analysis/*
 generate_autoencoder_models/go-analysis/*
 generate_autoencoder_models/embed_models/* 
 generate_autoencoder_models/results/*
+figures/data/*

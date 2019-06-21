@@ -10,7 +10,7 @@ library(data.table)
 library(tidyverse)
 library(tcltk)
 X11()
-args[1] = "gtex.archs.complete.rocdata.csv"
+args[1] = "gtex.archs.complete.rocdata.csv.ss"
 roc.total= fread(args[1], header =T, stringsAsFactors = F, sep =",")
 names(roc.total) = c("sensitivity","specificity","comparison", "class","auc")
 average.aucs = roc.total %>%  group_by(class, comparison ) %>%  summarise(average_auc=(mean(auc))) %>%  as.data.frame()
@@ -24,10 +24,10 @@ cl = c("#20A387FF", "black", "#2274A5", "#F75C03", "#F1C40F" , "#00CC66")
 ggplot(roc.total, aes( 1- specificity ,sensitivity , color = factor(comparison) )) + 
     geom_line(size = 1.5, alpha = .75)   + 
     facet_wrap(~class, nrow = 4) +
-    geom_text(data = average.aucs[average.aucs$comparison=="archs.complete.predict.gtex", ], aes(.55, .35, label = paste0("Train-GTeX::Predict-ARCHS4", "\n\t\t\tAUC: ", 
+    geom_text(data = average.aucs[average.aucs$comparison=="gtex-archs-ss", ], aes(.55, .35, label = paste0("Train-GTeX::Predict-ARCHS4", "\n\t\t\tAUC: ", 
                         sprintf('%.2f', round(average_auc, digits=2 ) ) ), 
                             group = class), color = "black", size = 4.5)   +
-    geom_text(data = average.aucs[average.aucs$comparison=="gtex.pred.archs.complete", ], aes(.55, .075, label = paste0("Train-ARCHS4::Predict-GTeX", "\n\t\t\tAUC: ", 
+    geom_text(data = average.aucs[average.aucs$comparison=="archs.predict.gtex.ss", ], aes(.55, .075, label = paste0("Train-ARCHS4::Predict-GTeX", "\n\t\t\tAUC: ", 
                         sprintf('%.2f', round(average_auc, digits=2 ) ) ), 
                             group = class), color = "black", size = 4.5) +
     geom_abline( slope = 1, intercept = 0 , color ="red") + 
