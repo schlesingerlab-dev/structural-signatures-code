@@ -6,19 +6,3 @@ Assumes that your working directory is the root of the structural signatures rep
 
 It references the `data/` directory with GTeX data. This data is available upon request. 
 
-## Dependancies 
- 
-### R libraries: 
-data.table
-magrittr
-tidyr
-vegan
-ggplot2
-ranger
-pROC
-plyr
-dplyr
-tidyverse
-rhdf5
-tools
-`install.packages(c("tidyverse", "data.table" ,"magrittr", "vegan", "ggplot2", "ranger", "pROC", "plyr", "dplyr", "rhdf5", "tools" ))`
