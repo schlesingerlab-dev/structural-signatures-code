@@ -34,3 +34,4 @@ generate_autoencoder_models/go-analysis/*
 generate_autoencoder_models/embed_models/* 
 generate_autoencoder_models/results/*
 figures/data/*
+generate_autoencoder_models/archs_data_complete/*
