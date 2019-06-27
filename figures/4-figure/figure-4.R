@@ -137,12 +137,12 @@ random_comparisions = function(splitfile, bootstraps, type  )
     }
     return(df.final)
 }
-gene.random = random_comparisions(genes.sp, 1000, "genes") 
+#gene.random = random_comparisions(genes.sp, 1000, "genes") 
 fold.random = random_comparisions(fold.sp, 1000, "fold") 
 family.random = random_comparisions(family.sp, 1000, "family") 
 sfam.random = random_comparisions(sfam.sp, 1000, "super") 
 domain.random = random_comparisions(domain.sp, 1000, "domain") 
-random.combined = rbind(gene.random,domain.random,sfam.random,family.random,fold.random)
+random.combined = rbind(domain.random,sfam.random,family.random,fold.random)
 random.combined$group = rep("across-tissues", nrow(random.combined))
 combined.2 = combined[,c(1,2,3)]
 names(combined.2)  = c("bootstrap", "distances", "type")
@@ -210,6 +210,7 @@ domain.dist = generate_jaccard_dist(domain.sampl, 1000, 250, "domain" )
 fam.dist = generate_jaccard_dist(fam.sampl, 1000, 150, "family"  )
 sfam.dist = generate_jaccard_dist(sfam.sampl, 1000, 150, "super")
 fold.dist = generate_jaccard_dist(fold.sampl, 1000, 150 , "fold")
+random.struct.combined = rbind(domain.dist , fam.dist, sfam.dist, fold.dist)
 within.across.struct.combined = rbind(within.across.combined, random.combined, domain.dist , fam.dist, sfam.dist, fold.dist)
 cl = c("#2274A5", "#F75C03", "#F1C40F" , "#00CC66")
 within.across.struct.combined = within.across.struct.combined[ which(within.across.struct.combined$type != "genes"  ) ,] 
@@ -234,15 +235,48 @@ ggplot(within.across.struct.combined,
           
 ### Signifigance testing
 
-w.a.s.c.sp = split(within.across.struct.combined, 
-                    f = factor(within.across.struct.combined.sp$type))
+#### within versus all domain 
+t.test(combined.2[which(combined.2$type == "domain"),2], 
+        as.numeric(as.character(random.combined[which(
+            random.combined$type == "domain"),2])) , 
+        alternative = "greater")
+t.test(combined.2[which(combined.2$type == "domain"),2], 
+        as.numeric(as.character(random.struct.combined[which(
+            random.struct.combined$type == "domain"),2])) , 
+        alternative = "greater")
 
+#### within versus all family 
+t.test(combined.2[which(combined.2$type == "family"),2], 
+        as.numeric(as.character(random.combined[which(
+            random.combined$type == "family"),2])) , 
+        alternative = "greater")
+t.test(combined.2[which(combined.2$type == "family"),2], 
+        as.numeric(as.character(random.struct.combined[which(
+            random.struct.combined$type == "family"),2])) , 
+        alternative = "greater")
 
+#### within versus all sfamily 
+t.test(combined.2[which(combined.2$type == "super"),2], 
+        as.numeric(as.character(random.combined[which(
+            random.combined$type == "super"),2])) , 
+        alternative = "greater")
+t.test(combined.2[which(combined.2$type == "super"),2], 
+        as.numeric(as.character(random.struct.combined[which(
+            random.struct.combined$type == "super"),2])) , 
+        alternative = "greater")
+
+#### within versus all fold 
+t.test(combined.2[which(combined.2$type == "fold"),2], 
+        as.numeric(as.character(random.combined[which(
+            random.combined$type == "fold"),2])) , 
+        alternative = "greater")
+t.test(combined.2[which(combined.2$type == "fold"),2], 
+        as.numeric(as.character(random.struct.combined[which(
+            random.struct.combined$type == "fold"),2])) , 
+        alternative = "greater")
 
 ## S.Figure 6 -------------------------------------------------------------
 ### Statistical testing of jaccard coefficients 
-
-
 combined.sp = split(combined, f = combined$tissue)
 compute_pvalues <- function(df.final.sp)
 {
