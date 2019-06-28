@@ -102,31 +102,31 @@ cl = c("#7e1e9c","#15b01a","#0343df","#ff81c0","#653700", "#e50000","#95d0fc","#
 genes.w = convert_to_wide(genes,  "Presense", "Gene")
 g.tissues = genes.w$Tissue %>%  as.character()
 g.subtissues = genes.w$`Sub-Tissue` %>% as.character()
-genes.w$subtissue = NULL
-genes.w$tissue = NULL
+genes.w$`Sub-Tissue` = NULL
+genes.w$Tissue = NULL
 genes.tsne = Rtsne( genes.w, dims = 3, perplexity = 30 , 
                     partial_pca=TRUE, 
                     theta =.5 ,  max_iter = 1000, verbose = T )
 plot_3d(genes.tsne, cl ,  g.tissues, g.subtissues, out.table = F)
 ## Figure 5B -------------------------------------------------------------
-### t-SNE clustering of GTeX tissues based on domain pvalue 
-domain.w = convert_to_wide(domain,  "pvalue", "Structure")
+### t-SNE clustering of GTeX tissues based on domain logfoldchange
+domain.w = convert_to_wide(domain,  "logfoldchange", "Structure")
 d.tissues = domain.w$Tissue %>%  as.character()
 d.subtissues = domain.w$`Sub-Tissue` %>% as.character()
-domain.w$subtissue = NULL
-domain.w$tissue = NULL
+domain.w$`Sub-Tissue` = NULL
+domain.w$Tissue = NULL
 domain.tsne = Rtsne( domain.w, dims = 3, perplexity = 30 , 
                     partial_pca=TRUE, 
                     theta =.5 ,  max_iter = 1000, verbose = T )
 plot_3d(domain.tsne, cl ,  d.tissues, d.subtissues, out.table = F)
 
 ## Figure 5C -------------------------------------------------------------
-### t-SNE clustering of GTeX tissues based on fold pvalue 
-fold.w = convert_to_wide(fold,  "pvalue", "Structure")
+### t-SNE clustering of GTeX tissues based on fold logfoldchange 
+fold.w = convert_to_wide(fold,  "logfoldchange", "Structure")
 f.tissues = fold.w$Tissue %>%  as.character()
 f.subtissues = fold.w$`Sub-Tissue` %>% as.character()
-fold.w$subtissue = NULL
-fold.w$tissue = NULL
+fold.w$`Sub-Tissue` = NULL
+fold.w$Tissue = NULL
 fold.tsne = Rtsne( fold.w, dims = 3, perplexity = 30 , 
                     partial_pca=TRUE, 
                     theta =.5 ,  max_iter = 1000, verbose = T )
@@ -305,9 +305,9 @@ for (i in strip_both) {
     }
 }
 grid.draw(g)
+
 ## Figure 5E -------------------------------------------------------------
 ### GTeX validation against of structural sigantures 
-
 domain.archs = read.table("figures/data/archs/structural-signatures/allcombined.archs.250.domain.csv", sep = "," , header = F, stringsAsFactors = F)
 fold.archs = read.table("figures/data/archs/structural-signatures/allcombined.archs.250.fold.csv", sep = "," , header = F, stringsAsFactors = F)
 family.archs = read.table("figures/data/archs/structural-signatures/allcombined.archs.250.family.csv", sep = "," , header = F, stringsAsFactors = F)
