@@ -267,7 +267,7 @@ ggplot(roc.total, aes( 1- Specificity ,Sensitivity , color = factor(size) )) +
 
 
 
-write.table(roc.total, "roc.total.presence.asbsence.csv", sep = ",", quote = F, eol = "\n" ,row.names = F, 
+write.table(roc.total, "genes.roc.total.presence.asbsence.csv", sep = ",", quote = F, eol = "\n" ,row.names = F, 
             col.names = T )
 
 ## S.Figure 1 -------------------------------------------------------------

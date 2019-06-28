@@ -38,8 +38,9 @@ names(domain) = header
 names(family) = header 
 names(sfam) = header 
 names(fold) = header 
+names(genes) =c("SID", "Sub-Tissue", "Tissue", "Gene", "Rank")
 
-colnames(genes) =c("SID", "Sub-Tissue", "Tissue", "Gene", "Rank")
+
 domain = domain[,c("SID", "Sub-Tissue" , "Tissue", "Gene" )]
 fold = fold[,c("SID", "Sub-Tissue" , "Tissue", "Gene")]
 family = family[,c("SID", "Sub-Tissue" , "Tissue", "Gene")]
