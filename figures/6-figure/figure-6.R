@@ -72,7 +72,7 @@ header = c(
 cl = c("#7e1e9c","#15b01a","#0343df","#ff81c0","#653700", "#e50000","#95d0fc","#f97306","#029386","#c20078",
        "#53fca1","#c04e01","#3f9b0b","#dbb40c","#580f41","#b9a281","#ff474c","#fffe7a","#40a368","#0a888a",
        "#887191","#be6400","#82cafc","#1fa774","#8cffdb","#7bb274","#510ac9","#ff5b00")
-## S.Figure 5B -------------------------------------------------------------
+## S.Figure 5A -------------------------------------------------------------
 ### PCA, t-SNE clustering of ARCHS tissues based on gene presense or absense 
 gene.archs = fread("figures/data/archs/archs.tissue.genelist", 
                         sep = "," , header = F, stringsAsFactors = F, data.table = F)
@@ -86,7 +86,9 @@ gene.w$Tissue  = NULL
 gene.tsne = Rtsne( gene.w, dims = 3, perplexity = 30 , 
                     partial_pca=TRUE,  check_duplicates=F, 
                     theta =.5 ,  max_iter = 1000, verbose = T )
-plot_3d(domain.tsne, cl ,  domain.tissues, domain.tissues, out.table = F)
+gene.tsne$Tissue = gene.tissues
+write.table("gene.archs.tsne.csv", header = T, quote = F, row.names = F, sep = ",")
+plot_3d(gene.tsne, cl ,  domain.tissues, domain.tissues, out.table = F)
 
 ## S.Figure 5B -------------------------------------------------------------
 ### PCA, t-SNE clustering of ARCHS tissues based on domain pvalue 
@@ -101,8 +103,6 @@ domain.w$Tissue  = NULL
 domain.tsne = Rtsne( domain.w, dims = 3, perplexity = 30 , 
                     partial_pca=TRUE,  check_duplicates=F, 
                     theta =.5 ,  max_iter = 1000, verbose = T )
-domain.pca = prcomp(domain.w)
-plot_3d(domain.tsne, cl ,  domain.tissues, domain.tissues, out.table = F)
 plot_3d(domain.tsne, cl ,  domain.tissues, domain.tissues, out.table = F)
 
 

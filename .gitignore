@@ -1,3 +1,4 @@
+figures/data.tar.gz
 generate_autoencoder_models/allcombined.archs4.domain.csv.format
 generate_autoencoder_models/allcombined.archs4.family.csv.format
 generate_autoencoder_models/allcombined.archs4.fold.csv.format
