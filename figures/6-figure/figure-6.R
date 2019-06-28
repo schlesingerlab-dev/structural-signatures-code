@@ -91,7 +91,7 @@ write.table("gene.archs.tsne.csv", header = T, quote = F, row.names = F, sep = "
 plot_3d(gene.tsne, cl ,  domain.tissues, domain.tissues, out.table = F)
 
 ## S.Figure 5B -------------------------------------------------------------
-### PCA, t-SNE clustering of ARCHS tissues based on domain pvalue 
+### t-SNE clustering of ARCHS tissues based on domain pvalue 
 domain.archs = fread("figures/data/archs/structural-signatures/allcombined.archs.250.domain.csv", 
                         sep = "," , header = F, stringsAsFactors = F, data.table = F)
 names(domain.archs) = header 
@@ -105,9 +105,26 @@ domain.tsne = Rtsne( domain.w, dims = 3, perplexity = 30 ,
                     theta =.5 ,  max_iter = 1000, verbose = T )
 plot_3d(domain.tsne, cl ,  domain.tissues, domain.tissues, out.table = F)
 
+## S.Figure 5B -------------------------------------------------------------
+### t-SNE clustering of ARCHS tissues based on domain pvalue 
+
+fold.archs = fread("figures/data/archs/structural-signatures/allcombined.archs.250.fold.csv", 
+                    sep = "," , header = F, stringsAsFactors = F, data.table = F)
+names(fold.archs) = header 
+fold.archs$SID = paste0(fold.archs$SID1, "-", fold.archs$Tissue)
+fold.w = convert_to_wide(fold.archs,  "logfoldchange", "Structure")
+fold.w = fold.w %>% distinct()
+fold.tissues = fold.w$Tissue %>%  as.character()
+fold.w$Tissue  = NULL
+fold.tsne = Rtsne( fold.w, dims = 3, perplexity = 30 , 
+                    partial_pca=TRUE,  check_duplicates=F, 
+                    theta =.5 ,  max_iter = 1000, verbose = T )
+plot_3d(fold.tsne, cl ,  fold.tissues, fold.tissues, out.table = F)
 
 
-fold.archs = read.table("figures/data/archs/structural-signatures/allcombined.archs.250.fold.csv", sep = "," , header = F, stringsAsFactors = F)
+
+
+
 family.archs = read.table("figures/data/archs/structural-signatures/allcombined.archs.250.family.csv", sep = "," , header = F, stringsAsFactors = F)
 sfam.archs = read.table("figures/data/archs/structural-signatures/allcombined.archs.250.superfam.csv", sep = "," , header = F, stringsAsFactors = F)
  header 
