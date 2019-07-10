@@ -69,11 +69,15 @@ header = c(
     "SID1", 
     "Tissue"
 )
-cl = c("#7e1e9c","#15b01a","#0343df","#ff81c0","#653700", "#e50000","#95d0fc","#f97306","#029386","#c20078",
+cl = c(
+    "#7e1e9c","#15b01a","#0343df","#ff81c0","#653700", "#e50000","#95d0fc","#f97306","#029386","#c20078",
        "#53fca1","#c04e01","#3f9b0b","#dbb40c","#580f41","#b9a281","#ff474c","#fffe7a","#40a368","#0a888a",
-       "#887191","#be6400","#82cafc","#1fa774","#8cffdb","#7bb274","#510ac9","#ff5b00")
+       "#887191","#be6400","#82cafc","#1fa774","#8cffdb","#7bb274","#510ac9","#ff5b00"
+    )
+
+embeddings = fread( "figures/data/archs/embeddings/archs.embed.csv", sep = ",", header = T)
 ## S.Figure 5A -------------------------------------------------------------
-### PCA, t-SNE clustering of ARCHS tissues based on gene presense or absense 
+### t-SNE clustering of ARCHS tissues based on gene presense or absense 
 gene.archs = fread("figures/data/archs/archs.tissue.genelist", 
                         sep = "," , header = F, stringsAsFactors = F, data.table = F)
 gene.archs[,c("V3","V4")] = str_split_fixed(gene.archs$V1 , "-" , n = 2)
@@ -83,12 +87,31 @@ gene.w = convert_to_wide(gene.archs,  "presense", "gene" )
 gene.w = gene.w %>% distinct()
 gene.tissues = gene.w$Tissue %>%  as.character()
 gene.w$Tissue  = NULL
-gene.tsne = Rtsne( gene.w, dims = 3, perplexity = 30 , 
+gene.tsne = Rtsne( data.matrix(gene.w), dims = 3, perplexity = 30 , 
                     partial_pca=TRUE,  check_duplicates=F, 
                     theta =.5 ,  max_iter = 1000, verbose = T )
 gene.tsne$Tissue = gene.tissues
 write.table("gene.archs.tsne.csv", header = T, quote = F, row.names = F, sep = ",")
-plot_3d(gene.tsne, cl ,  domain.tissues, domain.tissues, out.table = F)
+plot_3d(gene.tsne, cl ,  gene.tissues, gene.tissues, out.table = F)
+
+### Autoencoder embbeding of ARCHS tissues 
+gene.embed = embeddings[,c("ID", "gene1","gene2", "gene3", "class")]
+plot_ly(gene.embed, 
+        x = as.numeric(gene.embed$gene1),
+        y = as.numeric(gene.embed$gene2), 
+        z = as.numeric(gene.embed$gene3), 
+        color = factor(gene.embed$class) , 
+        colors = cl ) %>% 
+        layout(
+            scene = list(
+                xaxis = list(title = "Autoencoder 1"),
+                yaxis = list(title = "Autoencoder 2"),
+                zaxis = list(title = "Autoencoder 3")
+            )
+        ) %>%  
+        add_trace(
+            showlegend = T
+        )
 
 ## S.Figure 5B -------------------------------------------------------------
 ### t-SNE clustering of ARCHS tissues based on domain pvalue 
@@ -104,7 +127,33 @@ domain.tsne = Rtsne( domain.w, dims = 3, perplexity = 30 ,
                     partial_pca=TRUE,  check_duplicates=F, 
                     theta =.5 ,  max_iter = 1000, verbose = T )
 plot_3d(domain.tsne, cl ,  domain.tissues, domain.tissues, out.table = F)
+### Autoencoder embbeding of ARCHS tissues 
+plot_ly(embeddings, 
+        x = as.numeric(embeddings$superfamily1),
+        y = as.numeric(embeddings$superfamily2), 
+        z = as.numeric(embeddings$superfamily3), 
+        color = factor(embeddings$class) , 
+        colors = cl ) %>% 
+        layout(
+            scene = list(
+                xaxis = list(title = "Autoencoder 1"),
+                yaxis = list(title = "Autoencoder 2"),
+                zaxis = list(title = "Autoencoder 3")
+            )
+        ) %>%  
+        add_trace(
+            showlegend = T
+        )
 
+
+tiss = embeddings$class
+id = embeddings$ID
+embeddings$class = NULL
+embeddings$ID = NULL
+domain.tsne = Rtsne( as.data.frame(embeddings[,7:9]), dims = 3, perplexity = 50 , 
+                    partial_pca=F,  check_duplicates=F, 
+                    theta =.5 ,  max_iter = 1000, verbose = T )
+plot_3d(domain.tsne, cl , tiss,  tiss, out.table = F)
 ## S.Figure 5B -------------------------------------------------------------
 ### t-SNE clustering of ARCHS tissues based on domain pvalue 
 

@@ -38,7 +38,7 @@ type = as.character(args[5] ) #gene signatures: rank or presense || structural s
 epochs = as.character(args[6] ) 
 
 ##stacked autoencoder     
-gen_encoder_arch = function(inshape, bottle)
+gen_encoder_arch = function(inshape, bottle,  lossfx = "mean_squared_error")
 {
     input_layer <- 
     layer_input(shape = inshape)  
@@ -56,7 +56,7 @@ gen_encoder_arch = function(inshape, bottle)
         layer_dense(units = inshape)
     autoencoder_model <- keras_model(inputs = input_layer, outputs = decoder)
     autoencoder_model %>% compile(
-        loss = "mean_squared_error", 
+        loss = lossfx, 
         optimizer = "adam"
     )
     return(autoencoder_model)
@@ -83,7 +83,7 @@ embed_gene_signatures = function(data , type = "presense" , bottle = 3,  epochs 
     ##to make a stacked denoising autoencoder 
     data.x.noise = apply(data.x, 2, function(x) { noise = rnorm(length(x) , .01 , .005) ;  x + noise} ) 
     print("Training autoencoder model")
-    autoencoder_model = gen_encoder_arch( inshape = ncol(data.x), bottle = bottle ) 
+    autoencoder_model = gen_encoder_arch( inshape = ncol(data.x), bottle = bottle) 
     history = autoencoder_model %>% 
         fit(
             x = data.matrix(data.x) , 

@@ -93,9 +93,11 @@ plot_3d = function(tsne, cl , tissue, subtissue, out.table = F, table.name = "" 
     }
     return(p)
 }
-cl = c("#7e1e9c","#15b01a","#0343df","#ff81c0","#653700", "#e50000","#95d0fc","#f97306","#029386","#c20078",
+cl = c(
+    "#7e1e9c","#15b01a","#0343df","#ff81c0","#653700", "#e50000","#95d0fc","#f97306","#029386","#c20078",
        "#53fca1","#c04e01","#3f9b0b","#dbb40c","#580f41","#b9a281","#ff474c","#fffe7a","#40a368","#0a888a",
-       "#887191","#be6400","#82cafc","#1fa774","#8cffdb","#7bb274","#510ac9","#ff5b00")
+       "#887191","#be6400","#82cafc","#1fa774","#8cffdb","#7bb274","#510ac9","#ff5b00"
+       )
 
 ## Figure 5A -------------------------------------------------------------
 ### t-SNE clustering of GTeX tissues based on gene presense or absense 
