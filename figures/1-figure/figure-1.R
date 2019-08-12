@@ -37,7 +37,7 @@ compute_jaccard  = function(df.sp ){
         size = i$size %>%  unique 
         tiss = i$`Sub-Tissue` %>%  unique  
         overalltissue = i$Tissue %>% unique
-        print(tiss)
+        #print(tiss)
         i[,c(2,3,5)] = NULL
         i.wide = spread(data = i, key = Gene ,  value = val,  fill = 0 ) %>%  as.data.frame()    
         row.names(i.wide) = i.wide$SID 
@@ -306,6 +306,61 @@ ggplot(roc.total, aes(factor(size), auc, fill = factor(V1))) +
   theme_bw() + 
   theme(legend.position = "none")
 
+## S.Figure 3 -------------------------------------------------------------
+### Bootstrap n samples per tissue type to observe change in Jc variance and average Jc due to number of samples (see cervix)
+
+bootstrap_number_of_samples = function(data.sp , number_of_samples = 11 , bootstraps = 1000) {
+  df = data.frame()
+  for ( i in data.sp )
+  {
+    tis = i$Tissue %>% unique 
+    tis.s = i$`Sub-Tissue` %>% unique 
+    print(tis.s)
+    sid_num = unique(i$SID) %>% length 
+    if ( sid_num > number_of_samples ) 
+    {
+      for ( ii in 1:bootstraps )
+      {
+        sids = unique(i$SID)
+        sel = sids[sample(1:sid_num, number_of_samples)] 
+        i.sel = i[SID %in% sel] 
+        i.sel.sp = split(i.sel , f = i.sel$`Sub-Tissue`)
+        i.sel.jc = compute_jaccard(i.sel.sp)
+        variance = var(i.sel.jc$distances)
+        std = sd(i.sel.jc$distances)
+        avg = mean(i.sel.jc$distances)
+        n.gene = i.sel.jc$size %>% unique %>% as.character %>% as.numeric 
+        row = t(c(std, avg, variance, n.gene, ii, tis, tis.s , number_of_samples)) %>% as.data.frame
+        names(row) =c("standard_dev", "average", "variance", "number_genes", "bootstrap" , "tissue" , "sub_tissue", "number_of_samples")
+        df = rbind(df, row )
+      }
+    }
+    else 
+    {
+      print(paste0("Tissue: ", tis, " has less than the number of samples for bootstraping, skipping..."))
+    }
+  }
+  return(df)
+}
+num_samp = c(5, 10, 25, 50, 75, 100, 150  )
+bootstrap_samples.df  = data.frame()
+gene.total.sp = list(gene50.sp, gene250.sp, gene1000.sp) 
+for ( i in num_samp )
+{
+  for ( ii in 1:length(gene.total.sp) )
+  {
+    print(paste0("Sample Size: ", i, " Dataset: ",  ii ))
+    gene.set = gene.total.sp[[ii]]
+    dat = bootstrap_number_of_samples(gene.set, number_of_samples = i, bootstraps = 100)
+    bootstrap_samples.df = rbind(bootstrap_samples.df , dat)
+  }
+}
+bootstrap_samples.df.2 = bootstrap_samples.df[bootstrap_samples.df$tissue == "WholeBlood",]
+ggplot(bootstrap_samples.df, aes(factor(number_of_samples), 
+                               as.numeric(as.character(variance)), 
+                               fill = factor(number_genes)) ) + 
+  geom_boxplot() + 
+  facet_wrap( ~sub_tissue , scales = "free_x", ncol = 8 ) 
 
 ## S.Table 1 -------------------------------------------------------------
 ## Significance testing of Jaccard Coefficient distributions between 50, 250, and 1000 gene sets.
